@@ -508,64 +508,66 @@ const App: React.FC = () => {
           top: `${circleCursorPosition.y}px`,
         }}
       />
-      <Container className="bg" isClicked={isClicked}>
-        <AnimatedIntroText>
-          <NameContainer>
-            i'm{" "}
-            <span
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              style={{ fontWeight: "bold", color: "white" }}
-            >
-              selim
-            </span>
-            <Emoji src="./emoji.png" alt="emoji" isVisible={isHovered} />
-          </NameContainer>
-          <HeaderLinks>
-            <HeaderLink>about me</HeaderLink>
-          </HeaderLinks>
-        </AnimatedIntroText>
-        <TitleContainer>
-          <IntroText>i'm a</IntroText>
-          <div>
-            {Object.keys(titleData).map((title) => (
-              <TitleBox
-                key={title}
-                onMouseEnter={() => setActiveTab(title)}
-                onMouseLeave={() => setActiveTab(null)}
-                onClick={() => handleClick(title)}
+      <div className="bg">
+        <Container isClicked={isClicked}>
+          <AnimatedIntroText>
+            <NameContainer>
+              i'm{" "}
+              <span
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                style={{ fontWeight: "bold", color: "white" }}
               >
-                <InnerContainer active={activeTab === title}>
-                  <InnerContent>
-                    <InnerItem active={activeTab === title}>
-                      <ItemText>
-                        <span>{titleData[title].text}</span>
-                      </ItemText>
-                      <Tags>
-                        {titleData[title].tags.map((tag: any) => (
-                          <Tag key={tag}>{tag}</Tag>
-                        ))}
-                      </Tags>
-                    </InnerItem>
+                selim
+              </span>
+              <Emoji src="./emoji.png" alt="emoji" isVisible={isHovered} />
+            </NameContainer>
+            <HeaderLinks>
+              <HeaderLink>about me</HeaderLink>
+            </HeaderLinks>
+          </AnimatedIntroText>
+          <TitleContainer>
+            <IntroText>i'm a</IntroText>
+            <div>
+              {Object.keys(titleData).map((title) => (
+                <TitleBox
+                  key={title}
+                  onMouseEnter={() => setActiveTab(title)}
+                  onMouseLeave={() => setActiveTab(null)}
+                  onClick={() => handleClick(title)}
+                >
+                  <InnerContainer active={activeTab === title}>
+                    <InnerContent>
+                      <InnerItem active={activeTab === title}>
+                        <ItemText>
+                          <span>{titleData[title].text}</span>
+                        </ItemText>
+                        <Tags>
+                          {titleData[title].tags.map((tag: any) => (
+                            <Tag key={tag}>{tag}</Tag>
+                          ))}
+                        </Tags>
+                      </InnerItem>
 
-                    <TitleBg
-                      active={activeTab === title}
-                      title={title}
-                      x={dotCursorPosition.x}
-                      y={dotCursorPosition.y}
-                    />
-                    <Arrow active={activeTab === title}>
-                      <BsArrowRight size={32} />
-                    </Arrow>
-                  </InnerContent>
-                </InnerContainer>
-                <Title>{title}</Title>
-              </TitleBox>
-            ))}
-          </div>
-          <Subtitle>developer</Subtitle>
-        </TitleContainer>
-      </Container>
+                      <TitleBg
+                        active={activeTab === title}
+                        title={title}
+                        x={dotCursorPosition.x}
+                        y={dotCursorPosition.y}
+                      />
+                      <Arrow active={activeTab === title}>
+                        <BsArrowRight size={32} />
+                      </Arrow>
+                    </InnerContent>
+                  </InnerContainer>
+                  <Title>{title}</Title>
+                </TitleBox>
+              ))}
+            </div>
+            <Subtitle>developer</Subtitle>
+          </TitleContainer>
+        </Container>
+      </div>
     </>
   );
 };
