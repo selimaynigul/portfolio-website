@@ -297,7 +297,6 @@ const Title = styled.div`
 
 const TitleBox = styled.div`
   position: relative;
-  cursor: none;
   width: 100%;
   transition: all 0.3s ease;
   height: 60px;
