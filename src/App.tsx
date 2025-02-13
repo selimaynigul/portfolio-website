@@ -3,6 +3,38 @@ import styled, { keyframes, css } from "styled-components";
 import { BsArrowRight } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
+// Color mappings for different sections
+const backgroundColors = {
+  Web: {
+    "--c-0": "hsla(97, 80%, 40%, 1)",
+    "--c-1": "hsla(97, 60%, 25%, 1)",
+    "--c-2": "hsla(97, 50%, 20%, 1)",
+    "--c-3": "hsla(97, 90%, 60%, 1)",
+    "--c-4": "hsla(97, 30%, 10%, 1)",
+  },
+  Game: {
+    "--c-0": "hsla(248, 80%, 50%, 1)",
+    "--c-1": "hsla(248, 60%, 35%, 1)",
+    "--c-2": "hsla(248, 50%, 25%, 1)",
+    "--c-3": "hsla(248, 90%, 65%, 1)",
+    "--c-4": "hsla(248, 30%, 15%, 1)",
+  },
+  Mobile: {
+    "--c-0": "hsla(349, 80%, 50%, 1)",
+    "--c-1": "hsla(349, 60%, 35%, 1)",
+    "--c-2": "hsla(349, 50%, 25%, 1)",
+    "--c-3": "hsla(349, 90%, 65%, 1)",
+    "--c-4": "hsla(349, 30%, 15%, 1)",
+  },
+  Default: {
+    "--c-0": "hsla(97, 2%, 11%, 1)",
+    "--c-1": "hsla(75, 0%, 0%, 1)",
+    "--c-2": "hsla(248, 37%, 20%, 1)",
+    "--c-3": "hsla(254, 100%, 52%, 1)",
+    "--c-4": "hsla(349, 0%, 0%, 1)",
+  },
+};
+
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -25,8 +57,87 @@ const fadeOut = keyframes`
   }
 `;
 
-// Small dot cursor
-const DotCursor = styled.div`
+const fadeLeft = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-20px);
+  }
+`;
+
+const fadeInBlur = keyframes`
+  0% {
+    opacity: 0;
+    filter: blur(30px);
+    transform: scale(0.95);
+  }
+ 
+  100% {
+    opacity: 1;
+    filter: blur(200px);
+    transform: scale(1);
+  }
+`;
+
+const fadeOutBlur = keyframes`
+  0% {
+    opacity: 1;
+    filter: blur(200px);
+    transform: scale(1);
+  }
+ 
+  100% {
+    opacity: 0;
+    filter: blur(30px);
+    transform: scale(0.95);
+  }
+`;
+
+// Slide-in animation with a little rebound and lean effect
+const slideIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(-15px) rotate(-30deg);
+  }
+  30% {
+    opacity: 1;
+    transform: translateX(8px) rotate(20deg);
+  }
+  50% {
+    transform: translateX(-4px) rotate(-5deg);
+  }
+  65% {
+    transform: translateX(2px) rotate(3deg);
+  }
+  80% {
+    transform: translateX(0px) rotate(-1deg);
+  }
+  
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+`;
+
+const slideOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-10px) rotate(-15deg);
+  }
+`;
+
+const glow = keyframes`
+ from{text-shadow:0px 0px 5px #fff,0px 0px 5px #614ad3;}
+  to{text-shadow:0px 0px 20px #fff,0px 0px 20px #614ad3;}
+`;
+
+const DotCursor = styled.div<{ isVisible: boolean }>`
   position: fixed;
   width: 8px;
   height: 8px;
@@ -36,10 +147,10 @@ const DotCursor = styled.div`
   transform: translate(-50%, -50%);
   transition: transform 0.3s ease;
   z-index: 9999;
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
 `;
 
-// Large hover circle cursor
-const CircleCursor = styled.div<{ isHovered: boolean }>`
+const CircleCursor = styled.div<{ isHovered: boolean; isVisible: boolean }>`
   position: fixed;
   width: ${({ isHovered }) => (isHovered ? "40px" : "0px")};
   height: ${({ isHovered }) => (isHovered ? "40px" : "0px")};
@@ -51,6 +162,7 @@ const CircleCursor = styled.div<{ isHovered: boolean }>`
   transition: width 0.3s ease, height 0.3s ease, transform 0.1s ease;
   z-index: 9998;
   mix-blend-mode: difference;
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
 `;
 
 // Introductory text styling
@@ -73,9 +185,17 @@ const AnimatedIntroText = styled(IntroText)`
   padding: 0 8rem;
   position: absolute;
   top: 80px;
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+
+  span {
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1),
+      0px 0px 10px rgba(160, 153, 197, 0.51);
+    color: #ccc;
+  }
 `;
 
 // Container for titles
@@ -96,10 +216,6 @@ const InnerContainer = styled.div<{ active: boolean }>`
   transition: height 0.5s ease, background-color 0.3s ease;
   z-index: 0;
   box-sizing: border-box;
-  /*   background: ${({ active }) =>
-    active ? "#12121" : "#121212"}; // Change color when active */
-
-  /*   background: #121212; */
 
   ${({ active }) =>
     active &&
@@ -115,9 +231,10 @@ const InnerContent = styled.div`
   gap: 20px;
   align-items: top;
   box-sizing: border-box;
-  padding-left: 16rem;
+  padding-left: 18rem;
   padding-top: 1rem;
   padding-right: 20rem;
+  position: relative;
 `;
 const InnerItem = styled.div<{ active: boolean }>`
   height: 100%;
@@ -176,13 +293,11 @@ const Title = styled.div`
   transition: color 0.3s, transform 0.3s ease-in-out;
   z-index: 1;
   display: flex;
-  align-items: center;
 `;
 
 const TitleBox = styled.div`
   position: relative;
   cursor: none;
-  overflow: hidden;
   width: 100%;
   transition: all 0.3s ease;
   height: 60px;
@@ -194,8 +309,10 @@ const TitleBox = styled.div`
     color: white;
 
     ${Title} {
-      /*       transform: scale(1.03); // Slightly enlarge the active title
+      /*       transform: translateX(10px);
  */
+      text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1),
+        0px 0px 10px rgba(160, 153, 197, 0.51);
     }
   }
 `;
@@ -238,6 +355,70 @@ const HeaderLink = styled.p`
   margin: 0;
 `;
 
+const TitleBg = styled.div<{
+  active: boolean;
+  title: string;
+  x: number;
+  y: number;
+}>`
+  pointer-events: none;
+  opacity: 0;
+  position: absolute;
+  left: ${({ x }) => x - 200}px;
+  top: ${({ y }) => y - 450}px;
+  height: 500px;
+  width: 400px;
+  border-radius: 50%;
+  filter: blur(50px);
+  transition: opacity 1s ease-in-out, filter 1s ease-in-out,
+    transform 1s ease-in-out;
+
+  background: ${({ title }) =>
+    title === "Web"
+      ? "radial-gradient(circle, rgba(0, 255, 174, 0.53) 0%, rgba(218, 116, 0, 0) 70%)"
+      : title === "Game"
+      ? "radial-gradient(circle, rgba(0, 65, 204, 0.73) 0%, rgba(218, 116, 0, 0) 70%)"
+      : title === "Mobile"
+      ? "radial-gradient(circle, rgba(136, 0, 255, 0.75) 0%, rgba(168, 0, 120, 0.17) 70%)"
+      : "radial-gradient(circle, rgba(0, 255, 174, 0.4) 0%, rgba(218, 116, 0, 0) 70%)"};
+
+  ${({ active }) =>
+    active
+      ? css`
+          opacity: 1;
+          animation: ${fadeInBlur} 1s ease forwards;
+        `
+      : css`
+          opacity: 0;
+          animation: ${fadeOutBlur} 1s ease forwards;
+        `}
+`;
+
+const NameContainer = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 5px;
+  font-size: 1.5rem;
+`;
+
+const Emoji = styled.img<{ isVisible: boolean }>`
+  width: 32px;
+  height: 32px;
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+  position: absolute;
+  left: 100%;
+  margin-left: 8px;
+  animation: ${({ isVisible }) =>
+    isVisible
+      ? css`
+          ${slideIn} 0.8s ease-in-out;
+        `
+      : css`
+          ${slideOut} 0.2s ease-in-out;
+        `};
+`;
+
 // Main App Component
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string | null>(null); // Tracks active title
@@ -248,36 +429,43 @@ const App: React.FC = () => {
   });
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [isCursorVisible, setIsCursorVisible] = useState(false);
 
   const navigate = useNavigate();
-  // Track instant dot cursor
+
   useEffect(() => {
+    let animationFrame: number;
+
     const handleMouseMove = (e: MouseEvent) => {
+      setIsCursorVisible(true);
+
       setDotCursorPosition({ x: e.clientX, y: e.clientY });
 
-      // Delayed movement for the larger circle cursor
-      setTimeout(() => {
-        setCircleCursorPosition({ x: e.clientX, y: e.clientY });
-      }, 50); // Delay effect
+      animationFrame = requestAnimationFrame(() => {
+        setTimeout(() => {
+          setCircleCursorPosition({ x: e.clientX, y: e.clientY });
+        }, 50); // Increased delay for smoother effect
+      });
     };
 
+    const handleMouseEnter = () => {
+      setIsCursorVisible(true);
+    };
+
+    const handleMouseLeave = () => {
+      setIsCursorVisible(false);
+    };
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseenter", handleMouseEnter);
+    window.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseenter", handleMouseEnter);
+      window.removeEventListener("mouseleave", handleMouseLeave);
+      cancelAnimationFrame(animationFrame);
+    };
   }, []);
-
-  useEffect(() => {
-    console.log("Active Tab:", activeTab);
-
-    // Remove previous background class
-    document.body.classList.remove("bg-web", "bg-game", "bg-mobile");
-
-    if (activeTab) {
-      document.body.classList.add(`bg-${activeTab.toLowerCase()}`);
-    } else {
-      document.body.classList.remove("bg-web", "bg-game", "bg-mobile");
-    }
-  }, [activeTab]);
-
   // Data for each title
   const titleData: any = {
     Web: {
@@ -286,7 +474,7 @@ const App: React.FC = () => {
     },
     Game: {
       text: "Passionate about creating immersive game experiences using Unity, C#, and Augmented Reality.",
-      tags: ["Unity", "C#", "AR"],
+      tags: ["Unity", "C#", "Blender", "Aesprite"],
     },
     Mobile: {
       text: "Developing fast and interactive mobile apps with React Native and Kotlin for a seamless user experience.",
@@ -304,33 +492,41 @@ const App: React.FC = () => {
 
   return (
     <>
-      {/* Small White Dot Cursor */}
       <DotCursor
+        isVisible={isCursorVisible}
         style={{
           left: `${dotCursorPosition.x}px`,
           top: `${dotCursorPosition.y}px`,
         }}
       />
 
-      {/* Large Circle Cursor (Only Visible on Hover) */}
       <CircleCursor
         isHovered={activeTab !== null}
+        isVisible={isCursorVisible}
         style={{
           left: `${circleCursorPosition.x}px`,
           top: `${circleCursorPosition.y}px`,
         }}
       />
-      <Container isClicked={isClicked}>
+      <Container className="bg" isClicked={isClicked}>
         <AnimatedIntroText>
-          <div>
-            i am <span>selim</span>.
-          </div>
+          <NameContainer>
+            i'm{" "}
+            <span
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              style={{ fontWeight: "bold", color: "white" }}
+            >
+              selim
+            </span>
+            <Emoji src="./emoji.png" alt="emoji" isVisible={isHovered} />
+          </NameContainer>
           <HeaderLinks>
             <HeaderLink>about me</HeaderLink>
           </HeaderLinks>
         </AnimatedIntroText>
         <TitleContainer>
-          <IntroText>i am a</IntroText>
+          <IntroText>i'm a</IntroText>
           <div>
             {Object.keys(titleData).map((title) => (
               <TitleBox
@@ -351,6 +547,13 @@ const App: React.FC = () => {
                         ))}
                       </Tags>
                     </InnerItem>
+
+                    <TitleBg
+                      active={activeTab === title}
+                      title={title}
+                      x={dotCursorPosition.x}
+                      y={dotCursorPosition.y}
+                    />
                     <Arrow active={activeTab === title}>
                       <BsArrowRight size={32} />
                     </Arrow>
@@ -360,7 +563,7 @@ const App: React.FC = () => {
               </TitleBox>
             ))}
           </div>
-          <Subtitle>developer.</Subtitle>
+          <Subtitle>developer</Subtitle>
         </TitleContainer>
       </Container>
     </>
