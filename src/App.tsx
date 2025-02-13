@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled, { keyframes, css } from "styled-components";
 import { BsArrowRight } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { MdArrowOutward } from "react-icons/md";
 
 // Color mappings for different sections
 const backgroundColors = {
@@ -195,6 +196,7 @@ const AnimatedIntroText = styled(IntroText)`
     text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1),
       0px 0px 10px rgba(160, 153, 197, 0.51);
     color: #ccc;
+    z-index: 3;
   }
 `;
 
@@ -255,6 +257,13 @@ const Arrow = styled.div<{ active: boolean }>`
   dislay: none;
   opacity: 0;
   transition: all 0.5s ease;
+  margin-left: 24px;
+  padding: 0;
+  height: 16px;
+  width: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   ${({ active }) =>
     active &&
@@ -533,7 +542,11 @@ const App: React.FC = () => {
                   key={title}
                   onMouseEnter={() => setActiveTab(title)}
                   onMouseLeave={() => setActiveTab(null)}
-                  onClick={() => handleClick(title)}
+                  onClick={() => {
+                    if (activeTab !== null) {
+                      handleClick(title);
+                    }
+                  }}
                 >
                   <InnerContainer active={activeTab === title}>
                     <InnerContent>
@@ -555,8 +568,11 @@ const App: React.FC = () => {
                         y={dotCursorPosition.y}
                       />
                       <Arrow active={activeTab === title}>
-                        <BsArrowRight size={32} />
+                        <MdArrowOutward size={32} style={{ flexShrink: 0 }} />
                       </Arrow>
+                      {/*         <Arrow active={activeTab === title}>
+                        <BsArrowRight size={32} />
+                        </Arrow> */}
                     </InnerContent>
                   </InnerContainer>
                   <Title>{title}</Title>
