@@ -99,6 +99,7 @@ const HomePage = () => {
   const handleClick = (key: string) => {
     setIsClicked(true);
     setHoveredTab(null);
+    setHovered(false);
     setTimeout(() => navigate(`/${key.toLowerCase()}`), 300);
   };
 
