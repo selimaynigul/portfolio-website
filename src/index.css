@@ -3,6 +3,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
 .bg {
   --x-0: 91%;
   --c-0: hsla(97, 2%, 11%, 1);
@@ -72,6 +73,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: black;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+  padding: 0;
 }
 @keyframes hero-gradient-animation {
   0% {
