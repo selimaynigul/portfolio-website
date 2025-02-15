@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useCursor } from "context/CursorContext";
-import { fadeIn, fadeOut, slideIn, slideOut } from "styles/animations";
+import { fadeIn, fadeOut } from "styles/animations";
 import { categoryData } from "data/categoryData";
 import CategoryItemContent from "./components/CategoryItemContent";
 import Header from "./components/Header";
@@ -99,7 +99,7 @@ const HomePage = () => {
   const handleClick = (key: string) => {
     setIsClicked(true);
     setHoveredTab(null);
-    setTimeout(() => navigate(`/${key.toLowerCase()}`), 500);
+    setTimeout(() => navigate(`/${key.toLowerCase()}`), 300);
   };
 
   return (
