@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { fadeIn, fadeOut } from "styles/animations";
 import Tag from "components/Tag";
-import Header from "./components/Header";
+import Card from "components/Card";
 
 const Container = styled.div<{ isClicked: boolean }>`
   display: flex;
@@ -24,7 +24,7 @@ const Container = styled.div<{ isClicked: boolean }>`
 `;
 
 const AboutSection = styled.div`
-  animation: ${fadeIn} 1s ease-in-out;
+  animation: ${fadeIn} 0.5s ease-in-out;
   padding-left: 12rem;
   width: 30vw;
   text-align: left;
@@ -40,15 +40,7 @@ const AboutSection = styled.div`
   }
 `;
 
-const Summary = styled.p`
-  color: #ccc;
-  line-height: 1.6;
-  font-size: 0.9rem;
-  background: rgb(19, 19, 19);
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #333;
-`;
+const Summary = styled.p``;
 
 const TagContainer = styled.div`
   display: flex;
@@ -80,16 +72,17 @@ const AboutMePage: React.FC = () => {
 
   return (
     <Container isClicked={false}>
-      <Header />
       <AboutSection>
-        <Summary>
-          I’m Selim Aynigül, a passionate developer with a strong background in
-          software engineering. I specialize in web, mobile, and game
-          development, always eager to explore new technologies. From building
-          interactive front-end applications with React and Next.js to
-          developing robust mobile apps with Kotlin and Jetpack Compose, I
-          thrive on solving challenges and crafting seamless user experiences.
-        </Summary>
+        <Card>
+          <Summary>
+            I’m Selim Aynigül, a passionate developer with a strong background
+            in software engineering. I specialize in web, mobile, and game
+            development, always eager to explore new technologies. From building
+            interactive front-end applications with React and Next.js to
+            developing robust mobile apps with Kotlin and Jetpack Compose, I
+            thrive on solving challenges and crafting seamless user experiences.
+          </Summary>
+        </Card>
         <TagContainer>
           {skills.map((skill) => (
             <Tag key={skill}>{skill}</Tag>

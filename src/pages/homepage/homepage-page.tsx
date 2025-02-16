@@ -5,7 +5,8 @@ import { useCursor } from "context/CursorContext";
 import { fadeIn, fadeOut } from "styles/animations";
 import { categoryData } from "data/categoryData";
 import CategoryItemContent from "./components/CategoryItemContent";
-import Header from "./components/Header";
+import Header from "../../components/header/Header";
+import StyledTitle from "components/header/StyledTitle";
 
 const Container = styled.div<{ isClicked: boolean }>`
   display: flex;
@@ -27,7 +28,7 @@ const Container = styled.div<{ isClicked: boolean }>`
 `;
 
 const CategoryContainer = styled.div`
-  animation: ${fadeIn} 1s ease-in-out;
+  animation: ${fadeIn} 0.5s ease-in-out;
   margin-top: 1rem;
   width: 100%;
 `;
@@ -114,7 +115,6 @@ const HomePage = () => {
 
   return (
     <Container isClicked={isClicked}>
-      <Header onAboutClick={() => handleClick("about")} />{" "}
       <CategoryContainer>
         <Text>i'm a</Text>
         {Object.keys(categoryData).map((title) => (

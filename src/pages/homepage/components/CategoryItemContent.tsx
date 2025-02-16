@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { MdArrowOutward } from "react-icons/md";
 import { categoryData } from "data/categoryData";
@@ -19,7 +19,7 @@ const CategoryItemContentWrapper = styled.div<{ active: boolean }>`
   ${({ active }) =>
     active &&
     css`
-      height: 100%; // Fill the box when active
+      height: 100%;
     `}
 `;
 
@@ -30,7 +30,7 @@ const WrapperInner = styled.div`
   gap: 0px;
   align-items: top;
   box-sizing: border-box;
-  padding-left: 20rem;
+  padding-left: 22rem;
   padding-top: 1rem;
   padding-right: 20rem;
   position: relative;
@@ -44,18 +44,32 @@ const CategoryItemInfoContainer = styled.div<{ active: boolean }>`
   font-size: 0.9rem;
   display: flex;
   width: fit-content;
-
   padding: 15px;
   background: rgb(19, 19, 19);
-  border-radius: 15px;
+  border-radius: 10px;
   border: 1px solid #333;
-
+  position: relative;
+  overflow: hidden;
   border-top-right-radius: 0;
+
   ${({ active }) =>
     active &&
     css`
       opacity: 1;
     `};
+`;
+
+const CursorEffect = styled.div<{ x: number; y: number; visible: boolean }>`
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.2);
+  filter: blur(80px);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: transform 0.1s ease-out, opacity 0.3s ease-out;
+  transform: translate(${({ x }) => x}px, ${({ y }) => y}px);
+  opacity: ${({ visible }) => (visible ? 1 : 0)};
 `;
 
 const CategoryItemDescription = styled.div`
@@ -69,43 +83,8 @@ const CategoryItemDescription = styled.div`
 const Tags = styled.div`
   display: flex;
   gap: 10px;
-`;
-
-const BgLight = styled.div<{
-  active: boolean;
-  title: string;
-}>`
-  pointer-events: none;
-  opacity: 0;
-  position: absolute;
-  left: var(--bg-x, 50px);
-  top: var(--bg-y, 50px);
-  height: 500px;
-  width: 400px;
-  border-radius: 50%;
-  filter: blur(50px);
-  transition: opacity 1s ease-in-out, filter 1s ease-in-out,
-    transform 1s ease-in-out;
-
-  background: ${({ title }) =>
-    title === "Web"
-      ? "radial-gradient(circle, rgba(0, 255, 174, 0.53) 0%, rgba(218, 116, 0, 0) 70%)"
-      : title === "Game"
-      ? "radial-gradient(circle, rgba(0, 65, 204, 0.73) 0%, rgba(218, 116, 0, 0) 70%)"
-      : title === "Mobile"
-      ? "radial-gradient(circle, rgba(136, 0, 255, 0.75) 0%, rgba(168, 0, 120, 0.17) 70%)"
-      : "radial-gradient(circle, rgba(0, 255, 174, 0.4) 0%, rgba(218, 116, 0, 0) 70%)"};
-
-  ${({ active }) =>
-    active
-      ? css`
-          opacity: 0.8;
-          animation: ${fadeInBlur} 0.8s ease forwards;
-        `
-      : css`
-          opacity: 0;
-          animation: ${fadeOutBlur} 0.8s ease forwards;
-        `}
+  position: relative;
+  z-index: 2;
 `;
 
 const Arrow = styled.div<{ active: boolean }>`
@@ -142,10 +121,38 @@ const CategoryItemContent: React.FC<CategoryItemContentProps> = ({
   title,
   active,
 }) => {
+  const [cursorPos, setCursorPos] = useState({ x: 50, y: 50 });
+  const [cursorVisible, setCursorVisible] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const offsetY = e.clientY - rect.top;
+    setCursorPos({ x: offsetX - 60, y: offsetY - 60 });
+  };
+
+  const handleMouseEnter = () => {
+    setCursorVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setCursorVisible(false);
+  };
+
   return (
     <CategoryItemContentWrapper active={active}>
       <WrapperInner>
-        <CategoryItemInfoContainer active={active}>
+        <CategoryItemInfoContainer
+          onMouseMove={handleMouseMove}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          active={active}
+        >
+          <CursorEffect
+            x={cursorPos.x}
+            y={cursorPos.y}
+            visible={cursorVisible}
+          />
           <CategoryItemDescription>
             <span>{categoryData[title].text}</span>
             <Tags>
@@ -155,8 +162,6 @@ const CategoryItemContent: React.FC<CategoryItemContentProps> = ({
             </Tags>
           </CategoryItemDescription>
         </CategoryItemInfoContainer>
-
-        {/*    <BgLight active={active} title={title} /> */}
 
         <Arrow active={active}>
           <MdArrowOutward size={24} style={{ flexShrink: 0 }} />
