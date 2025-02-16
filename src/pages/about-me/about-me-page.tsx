@@ -19,13 +19,13 @@ const Container = styled.div<{ isClicked: boolean }>`
   ${({ isClicked }) =>
     isClicked &&
     css`
-      animation: ${fadeOut} 0.5s ease forwards;
+      animation: ${fadeOut} 0.3s ease forwards;
     `}
 `;
 
 const AboutSection = styled.div`
   animation: ${fadeIn} 1s ease-in-out;
-  padding-left: 8rem;
+  padding-left: 10rem;
   width: 35vw;
   text-align: left;
   color: white;
@@ -64,6 +64,8 @@ const AboutMePage: React.FC = () => {
     "Git",
     "Bitbucket",
     "Blender",
+    "Figma",
+    "Aseprite",
   ];
 
   return (

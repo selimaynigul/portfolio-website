@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Segmented } from "antd";
 import { fadeIn, slideIn, slideOut } from "styles/animations";
 import { useCursor } from "context/CursorContext";
 
 const HeaderContainer = styled.div`
   animation: ${fadeIn} 1s ease-in-out;
-  padding: 0 8rem;
+  padding: 0 10rem;
   position: absolute;
-  top: 80px;
+  top: 6rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -41,9 +42,32 @@ const Emoji = styled.img<{ isVisible: boolean }>`
     ${({ isVisible }) => (isVisible ? "0.8s" : "0.2s")} ease-in-out;
 `;
 
+const FilterContainer = styled.div`
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledSegmented = styled(Segmented)`
+  &.ant-segmented {
+    background: transparent;
+  }
+
+  .ant-segmented-item-selected {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+  }
+`;
+
 const Header: React.FC = () => {
   const [isNameHovered, setIsNameHovered] = useState(false);
   const { setHovered } = useCursor();
+  const [filter, setFilter] = useState("All");
 
   return (
     <HeaderContainer>
@@ -57,6 +81,14 @@ const Header: React.FC = () => {
         </span>
         <Emoji src="./emoji.png" alt="emoji" isVisible={isNameHovered} />
       </NameContainer>
+
+      {/*  <FilterContainer>
+        <StyledSegmented
+          options={["All", "Mobile", "Web", "Game"]}
+          value={filter}
+          onChange={(value) => setFilter(value as string)}
+        />
+      </FilterContainer> */}
 
       <p
         onMouseEnter={() => setHovered(true)}

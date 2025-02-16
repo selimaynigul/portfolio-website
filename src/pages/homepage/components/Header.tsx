@@ -5,9 +5,9 @@ import { useCursor } from "context/CursorContext";
 
 const HeaderContainer = styled.div`
   animation: ${fadeIn} 1s ease-in-out;
-  padding: 0 8rem;
+  padding: 0 10rem;
   position: absolute;
-  top: 80px;
+  top: 6rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
