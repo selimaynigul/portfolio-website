@@ -109,7 +109,6 @@ const BgLight = styled.div<{
 `;
 
 const Arrow = styled.div<{ active: boolean }>`
-  background: rgb(19, 19, 19);
   opacity: 0;
   transition: all 0.5s ease;
   padding: 0;
@@ -118,6 +117,7 @@ const Arrow = styled.div<{ active: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgb(19, 19, 19);
   padding: 15px;
   border-radius: 10px;
   border: 1px solid #333;

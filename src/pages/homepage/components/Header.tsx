@@ -20,6 +20,11 @@ const HeaderContainer = styled.div`
     color: #ccc;
     z-index: 3;
   }
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+    width: 100%;
+  }
 `;
 
 const NameContainer = styled.div`

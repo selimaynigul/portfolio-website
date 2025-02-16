@@ -60,6 +60,11 @@ const CategoryItem = styled.div`
         0px 0px 10px rgba(160, 153, 197, 0.51);
     }
   }
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+    width: 100%;
+  }
 `;
 
 const Text = styled.p`
@@ -67,6 +72,11 @@ const Text = styled.p`
   margin: 0;
   margin: 10px 0;
   padding-left: 12rem;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+    width: 100%;
+  }
 `;
 
 const HomePage = () => {

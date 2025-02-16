@@ -29,16 +29,25 @@ const AboutSection = styled.div`
   width: 30vw;
   text-align: left;
   color: white;
-
   display: flex;
   flex-direction: column;
   gap: 3rem;
+
+  @media (max-width: 768px) {
+    box-sizing: border-box;
+    padding: 0 10px;
+    width: 100%;
+  }
 `;
 
 const Summary = styled.p`
   color: #ccc;
   line-height: 1.6;
   font-size: 0.9rem;
+  background: rgb(19, 19, 19);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #333;
 `;
 
 const TagContainer = styled.div`
