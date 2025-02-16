@@ -48,7 +48,7 @@ const CategoryItem = styled.div`
   width: 100%;
   transition: all 0.3s ease;
   height: 60px;
-  padding-left: 8rem;
+  padding-left: 10rem;
   color: #ccc;
 
   &:hover {
@@ -67,7 +67,7 @@ const Text = styled.p`
   color: #ccc;
   margin: 0;
   margin: 10px 0;
-  padding-left: 8rem;
+  padding-left: 10rem;
 `;
 
 const HomePage = () => {
