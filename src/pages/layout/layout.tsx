@@ -9,7 +9,12 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <CursorProvider>
-      <div className="bg" style={{ minHeight: "100vh" }}>
+      <div
+        /* className="bg" */ style={{
+          minHeight: "100vh",
+          background: "rgb(14, 14, 14)",
+        }}
+      >
         <DotCursor />
         {children}
       </div>

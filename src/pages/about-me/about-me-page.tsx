@@ -25,8 +25,8 @@ const Container = styled.div<{ isClicked: boolean }>`
 
 const AboutSection = styled.div`
   animation: ${fadeIn} 1s ease-in-out;
-  padding-left: 10rem;
-  width: 35vw;
+  padding-left: 12rem;
+  width: 30vw;
   text-align: left;
   color: white;
 
@@ -38,6 +38,7 @@ const AboutSection = styled.div`
 const Summary = styled.p`
   color: #ccc;
   line-height: 1.6;
+  font-size: 0.9rem;
 `;
 
 const TagContainer = styled.div`

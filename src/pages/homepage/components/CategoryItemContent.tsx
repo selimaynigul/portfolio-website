@@ -27,10 +27,10 @@ const WrapperInner = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  gap: 20px;
+  gap: 0px;
   align-items: top;
   box-sizing: border-box;
-  padding-left: 18rem;
+  padding-left: 20rem;
   padding-top: 1rem;
   padding-right: 20rem;
   position: relative;
@@ -43,25 +43,31 @@ const CategoryItemInfoContainer = styled.div<{ active: boolean }>`
   transition: all 0.5s ease;
   font-size: 0.9rem;
   display: flex;
+  width: fit-content;
 
+  padding: 15px;
+  background: rgb(19, 19, 19);
+  border-radius: 15px;
+  border: 1px solid #333;
+
+  border-top-right-radius: 0;
   ${({ active }) =>
     active &&
     css`
       opacity: 1;
-    `}
+    `};
 `;
 
 const CategoryItemDescription = styled.div`
-  max-width: 300px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  font-size: 0.9rem;
 `;
 
 const Tags = styled.div`
-  margin-left: 20px;
   display: flex;
-  height: fit-content;
   gap: 10px;
 `;
 
@@ -103,15 +109,22 @@ const BgLight = styled.div<{
 `;
 
 const Arrow = styled.div<{ active: boolean }>`
+  background: rgb(19, 19, 19);
   opacity: 0;
   transition: all 0.5s ease;
-  margin-left: 24px;
   padding: 0;
-  height: 16px;
-  width: 16px;
+  height: 24px;
+  width: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  border-top-left-radius: 0;
+  border-top-left: 0;
+  border-bottom-left-radius: 0;
+  color: rgba(255, 255, 255, 0.5);
 
   ${({ active }) =>
     active &&
@@ -135,18 +148,18 @@ const CategoryItemContent: React.FC<CategoryItemContentProps> = ({
         <CategoryItemInfoContainer active={active}>
           <CategoryItemDescription>
             <span>{categoryData[title].text}</span>
+            <Tags>
+              {categoryData[title].tags.map((tag: any) => (
+                <Tag key={tag}>{tag}</Tag>
+              ))}
+            </Tags>
           </CategoryItemDescription>
-          <Tags>
-            {categoryData[title].tags.map((tag: any) => (
-              <Tag key={tag}>{tag}</Tag>
-            ))}
-          </Tags>
         </CategoryItemInfoContainer>
 
-        <BgLight active={active} title={title} />
+        {/*    <BgLight active={active} title={title} /> */}
 
         <Arrow active={active}>
-          <MdArrowOutward size={32} style={{ flexShrink: 0 }} />
+          <MdArrowOutward size={24} style={{ flexShrink: 0 }} />
         </Arrow>
       </WrapperInner>
     </CategoryItemContentWrapper>

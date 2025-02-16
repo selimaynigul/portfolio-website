@@ -2,17 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledTag = styled.span`
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 4px 14px;
   border-radius: 50px;
   font-size: 0.8rem;
-  color: #ccc;
+  color: rgba(255, 255, 255, 0.5);
   transition: all 0.3s ease-in-out;
   text-wrap: nowrap;
 
-  &:hover {
+  /* &:hover {
     background: rgba(255, 255, 255, 0.1);
-  }
+  } */
 `;
 
 interface TagProps {

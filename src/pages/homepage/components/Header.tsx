@@ -5,7 +5,7 @@ import { useCursor } from "context/CursorContext";
 
 const HeaderContainer = styled.div`
   animation: ${fadeIn} 1s ease-in-out;
-  padding: 0 10rem;
+  padding: 0 12rem;
   position: absolute;
   top: 6rem;
   width: 100%;
@@ -28,6 +28,7 @@ const NameContainer = styled.div`
   position: relative;
   gap: 5px;
   font-size: 1.5rem;
+  color: rgb(120, 120, 120);
 `;
 
 const Emoji = styled.img<{ isVisible: boolean }>`

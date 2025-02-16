@@ -22,7 +22,7 @@ const Container = styled.div<{ isClicked: boolean }>`
   ${({ isClicked }) =>
     isClicked &&
     css`
-      animation: ${fadeOut} 0.5s ease forwards;
+      animation: ${fadeOut} 0.3s ease forwards;
     `}
 `;
 
@@ -33,7 +33,7 @@ const CategoryContainer = styled.div`
 `;
 
 const CategoryTitle = styled.div`
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   position: relative;
   width: 100%;
@@ -48,7 +48,7 @@ const CategoryItem = styled.div`
   width: 100%;
   transition: all 0.3s ease;
   height: 60px;
-  padding-left: 10rem;
+  padding-left: 12rem;
   color: #ccc;
 
   &:hover {
@@ -63,11 +63,10 @@ const CategoryItem = styled.div`
 `;
 
 const Text = styled.p`
-  font-size: 1rem;
-  color: #ccc;
+  color: rgb(120, 120, 120);
   margin: 0;
   margin: 10px 0;
-  padding-left: 10rem;
+  padding-left: 12rem;
 `;
 
 const HomePage = () => {
@@ -100,7 +99,7 @@ const HomePage = () => {
     setIsClicked(true);
     setHoveredTab(null);
     setHovered(false);
-    setTimeout(() => navigate(`/${key.toLowerCase()}`), 300);
+    setTimeout(() => navigate(`/${key.toLowerCase()}`), 100);
   };
 
   return (
