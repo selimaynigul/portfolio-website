@@ -5,15 +5,11 @@ import { useCursor } from "context/CursorContext";
 import { fadeIn, fadeOut } from "styles/animations";
 import { categoryData } from "data/categoryData";
 import CategoryItemContent from "./components/CategoryItemContent";
-import Header from "../../components/header/Header";
-import StyledTitle from "components/header/StyledTitle";
 
 const Container = styled.div<{ isClicked: boolean }>`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
-  height: 100vh;
   color: white;
   position: relative;
   overflow: hidden;
@@ -110,7 +106,7 @@ const HomePage = () => {
     setIsClicked(true);
     setHoveredTab(null);
     setHovered(false);
-    setTimeout(() => navigate(`/${key.toLowerCase()}`), 100);
+    navigate(`/${key.toLowerCase()}`);
   };
 
   return (

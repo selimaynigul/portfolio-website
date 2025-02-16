@@ -10,9 +10,9 @@ const StyledTag = styled.span`
   transition: all 0.3s ease-in-out;
   text-wrap: nowrap;
 
-  /* &:hover {
+  &:hover {
     background: rgba(255, 255, 255, 0.1);
-  } */
+  }
 `;
 
 interface TagProps {

@@ -38,7 +38,7 @@ const StyledTitle: React.FC<{ isFirstLoad: boolean }> = ({ isFirstLoad }) => {
         <span style={{ fontWeight: "bold", color: "white" }}>about me</span>
       ) : (
         <>
-          i'm{" "}
+          <p>i'm </p>
           <span
             onMouseEnter={() => setIsNameHovered(true)}
             onMouseLeave={() => setIsNameHovered(false)}

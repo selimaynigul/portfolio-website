@@ -4,19 +4,24 @@ import styled, { css } from "styled-components";
 import { fadeIn, fadeOut } from "styles/animations";
 import { useCursor } from "context/CursorContext";
 import StyledTitle from "./StyledTitle";
+import Card from "components/Card";
+import { BsEnvelopeFill, BsGithub, BsLinkedin } from "react-icons/bs";
+import { FaLinkedinIn, FaEnvelope } from "react-icons/fa";
+import { HiMail } from "react-icons/hi";
 
 const HeaderContainer = styled.div<{ isFading: boolean }>`
-  /*   animation: ${({ isFading }) =>
-    isFading ? fadeOut : fadeIn} 0.5s ease-in-out;
- */
+  /* animation: ${({ isFading }) =>
+    isFading ? fadeOut : fadeIn} 0.5s ease-in-out; */
   padding: 0 12rem;
-  position: absolute;
-  top: 6rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
+  position: relative;
+
+  margin: 4rem 0;
+  margin-top: 0;
 
   span {
     text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1),
@@ -33,13 +38,12 @@ const HeaderContainer = styled.div<{ isFading: boolean }>`
 
 const LinkText = styled.p`
   transition: all 0.3s ease;
-  cursor: pointer;
   color: #ccc;
   z-index: 1;
-
+  /* 
   &:hover {
     transform: translateX(10px);
-  }
+  } */
 `;
 
 const Header: React.FC = () => {
@@ -56,26 +60,40 @@ const Header: React.FC = () => {
   }, []);
 
   const handleClick = () => {
-    console.log("clicked");
+    setHovered(false);
     setIsFading(true);
-    setTimeout(() => {
-      navigate(location.pathname === "/" ? "/about" : "/contact");
-      setIsFading(false);
-      setIsVisible(false);
-      setTimeout(() => setIsVisible(true), 500);
-    }, 500); // Match fade-out duration
+    navigate(location.pathname === "/" ? "/about" : "/contact");
+    setIsFading(false);
+    setIsVisible(false);
+    setTimeout(() => setIsVisible(true), 500);
   };
 
   return (
     <HeaderContainer isFading={!isVisible || isFading}>
       <StyledTitle isFirstLoad={isFirstLoad} />
-      <LinkText
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onClick={handleClick}
-      >
-        {location.pathname === "/about" ? "contact" : "about me"}
-      </LinkText>
+      <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+        {location.pathname === "/about" ? (
+          <>
+            <Card>
+              <FaLinkedinIn size={20} color="rgb(97, 97, 97)" />
+            </Card>
+            <Card>
+              <BsGithub size={20} color="rgb(97, 97, 97)" />
+            </Card>
+            <Card>
+              <FaEnvelope size={20} color="rgb(97, 97, 97)" />
+            </Card>
+          </>
+        ) : (
+          <LinkText
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            onClick={handleClick}
+          >
+            about me
+          </LinkText>
+        )}
+      </div>
     </HeaderContainer>
   );
 };

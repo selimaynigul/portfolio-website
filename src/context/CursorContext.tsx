@@ -23,16 +23,18 @@ export const CursorProvider: React.FC<{ children: React.ReactNode }> = ({
       setCursorPos({ x: e.clientX, y: e.clientY });
     };
 
-    const handleMouseLeave = () => {
-      setIsVisible(false);
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (!e.relatedTarget) {
+        setIsVisible(false);
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("mouseout", handleMouseLeave);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("mouseout", handleMouseLeave);
     };
   }, []);
 

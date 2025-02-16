@@ -1,5 +1,4 @@
 import Header from "components/header/Header";
-import StyledTitle from "components/header/StyledTitle";
 import React from "react";
 
 interface LayoutProps {
@@ -12,10 +11,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       style={{
         minHeight: "100vh",
         background: "rgb(14, 14, 14)",
+        cursor: "none",
       }}
     >
-      <Header />
-      {children}
+      <div style={{ paddingTop: "4rem" }}>
+        <Header />
+        {children}
+      </div>
     </div>
   );
 };

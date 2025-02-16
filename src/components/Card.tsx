@@ -11,14 +11,19 @@ const CardWrapper = styled.div`
   transition: transform 0.2s ease-in-out;
   color: #ccc;
   font-size: 0.9rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
 `;
 
 const CursorEffect = styled.div<{ x: number; y: number; visible: boolean }>`
   position: absolute;
   width: 120px;
   height: 120px;
-  background: rgba(255, 255, 255, 0.3);
-  filter: blur(80px);
+  background: rgba(255, 255, 255, 0.2);
+  filter: blur(100px);
   border-radius: 50%;
   pointer-events: none;
   transition: transform 0.1s ease-out, opacity 0.3s ease-out;
