@@ -71,7 +71,13 @@ const Header: React.FC = () => {
   return (
     <HeaderContainer isFading={!isVisible || isFading}>
       <StyledTitle isFirstLoad={isFirstLoad} />
-      <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "1rem",
+          alignItems: "center",
+        }}
+      >
         {location.pathname === "/about" ? (
           <>
             <Card>

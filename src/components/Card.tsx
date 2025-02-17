@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const CardWrapper = styled.div`
-  padding: 15px;
-  background: rgb(19, 19, 19);
-  border-radius: 10px;
-  border: 1px solid #333;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s ease-in-out;
-  color: #ccc;
-  font-size: 0.9rem;
-
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  justify-content: center;
+const CardWrapper = styled.div<{ styleProps: React.CSSProperties }>`
+  ${({ styleProps }) => ({
+    padding: styleProps.padding || "15px",
+    background: styleProps.background || "rgb(19, 19, 19)",
+    borderRadius: styleProps.borderRadius || "10px",
+    border: styleProps.border || "1px solid #333",
+    position: "relative",
+    overflow: "hidden",
+    transition: "transform 0.2s ease-in-out",
+    color: styleProps.color || "#ccc",
+    fontSize: styleProps.fontSize || "0.9rem",
+    width: styleProps.width || "null",
+    display: "flex",
+    flexDirection: "column",
+    gap: styleProps.gap || "20px",
+    justifyContent: "center",
+    ...styleProps,
+  })}
 `;
 
 const CursorEffect = styled.div<{ x: number; y: number; visible: boolean }>`
@@ -33,9 +36,10 @@ const CursorEffect = styled.div<{ x: number; y: number; visible: boolean }>`
 
 interface CardProps {
   children: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
-const Card: React.FC<CardProps> = ({ children }) => {
+const Card: React.FC<CardProps> = ({ children, style = {} }) => {
   const [cursorPos, setCursorPos] = useState({ x: 50, y: 50 });
   const [cursorVisible, setCursorVisible] = useState(false);
 
@@ -59,6 +63,7 @@ const Card: React.FC<CardProps> = ({ children }) => {
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      styleProps={style}
     >
       <CursorEffect x={cursorPos.x} y={cursorPos.y} visible={cursorVisible} />
       {children}

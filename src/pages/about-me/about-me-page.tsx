@@ -15,6 +15,11 @@ const Container = styled.div<{ isClicked: boolean }>`
   overflow: hidden;
   cursor: none;
   transition: background 0.7s ease-in-out;
+  padding: 0 12rem;
+
+  @media (max-width: 768px) {
+    padding: 0 10px;
+  }
 
   ${({ isClicked }) =>
     isClicked &&
@@ -25,7 +30,6 @@ const Container = styled.div<{ isClicked: boolean }>`
 
 const AboutSection = styled.div`
   animation: ${fadeIn} 0.5s ease-in-out;
-  padding-left: 12rem;
   text-align: left;
   color: white;
   display: flex;
@@ -34,7 +38,6 @@ const AboutSection = styled.div`
 
   @media (max-width: 768px) {
     box-sizing: border-box;
-    padding: 0 10px;
     width: 100%;
   }
 `;
@@ -44,11 +47,7 @@ const WorkExperienceSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding-right: 12rem;
-
-  @media (max-width: 768px) {
-    padding: 0 10px;
-  }
+  padding-bottom: 2rem;
 `;
 
 const TagContainer = styled.div`
@@ -113,17 +112,36 @@ const AboutMePage: React.FC = () => {
   return (
     <Container isClicked={false}>
       <Row gutter={[32, 32]}>
-        <Col xs={24} md={12}>
+        <Col
+          xs={24}
+          md={12}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
           <AboutSection>
-            <div style={{ width: "fit-content" }}>
-              <Card>
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <FaLocationDot color="rgb(97, 97, 97)" />
-                  Based in Istanbul, Turkey
-                </div>
+            <div style={{ display: "flex", gap: "1rem", height: "4rem" }}>
+              <Card
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 10,
+                  flexShrink: 0,
+                }}
+              >
+                <FaLocationDot color="rgb(97, 97, 97)" />
+                Based in Istanbul, Turkey
+              </Card>
+              <Card
+                style={{
+                  background: "url(/landscape_2.gif) center/cover no-repeat",
+                  width: "100%;",
+                }}
+              >
+                <></>
               </Card>
             </div>
-            <Card>
+
+            <div style={{ margin: "2rem 0" }}>
               <p>
                 I’m Selim Aynigül, a passionate developer with a strong
                 background in software engineering. I specialize in web, mobile,
@@ -133,7 +151,7 @@ const AboutMePage: React.FC = () => {
                 Compose, I thrive on solving challenges and crafting seamless
                 user experiences.
               </p>
-            </Card>
+            </div>
             <TagContainer>
               {skills.map((skill) => (
                 <Tag key={skill}>{skill}</Tag>
@@ -141,7 +159,11 @@ const AboutMePage: React.FC = () => {
             </TagContainer>
           </AboutSection>
         </Col>
-        <Col md={24} lg={12}>
+        <Col
+          xs={24}
+          md={12}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
           <WorkExperienceSection>
             {workExperiences.map((work, index) => (
               <Card key={index}>
