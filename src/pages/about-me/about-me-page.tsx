@@ -133,7 +133,8 @@ const AboutMePage: React.FC = () => {
               </Card>
               <Card
                 style={{
-                  background: "url(/landscape_2.gif) center/cover no-repeat",
+                  background:
+                    "url(/landscapes/landscape_2.gif) center/cover no-repeat",
                   width: "100%;",
                 }}
               >

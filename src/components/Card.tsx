@@ -9,7 +9,7 @@ const CardWrapper = styled.div<{ styleProps: React.CSSProperties }>`
     border: styleProps.border || "1px solid #333",
     position: "relative",
     overflow: "hidden",
-    transition: "transform 0.2s ease-in-out",
+    transition: "all 0.3s ease-in-out",
     color: styleProps.color || "#ccc",
     fontSize: styleProps.fontSize || "0.9rem",
     width: styleProps.width || "null",
