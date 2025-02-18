@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const CardWrapper = styled.div<{ styleProps: React.CSSProperties }>`
+  box-shadow: rgb(14, 14, 14) 0px 50px 100px -20px,
+    rgb(0, 0, 0) 0px 30px 60px -30px;
   ${({ styleProps }) => ({
     padding: styleProps.padding || "15px",
     background: styleProps.background || "rgb(19, 19, 19)",
