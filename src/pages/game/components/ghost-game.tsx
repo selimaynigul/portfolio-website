@@ -49,10 +49,9 @@ const PauseButton = styled(FaPause)`
 
 const Title = styled.div`
   position: absolute;
-  font-size: 1.5rem;
-  color: white;
+  font-size: 1.2rem;
   z-index: 1;
-  font-weight: 500;
+  color: lightgray;
 `;
 
 const InstructionGif = styled.img<{ visible: boolean }>`
@@ -63,6 +62,7 @@ const InstructionGif = styled.img<{ visible: boolean }>`
   width: 150px;
   opacity: ${({ visible }) => (visible ? 1 : 0)};
   pointer-events: none;
+  z-index: 4;
 `;
 
 const StyledCard = styled(Card).attrs((props) => ({
@@ -80,7 +80,7 @@ const GhostGame = () => {
   const [instructionGifKey, setInstructionGifKey] = useState(0);
   const [firstStart, setFirstStart] = useState(true); // Track first game start
   const { isHovered, setHovered } = useCursor();
-  const [startPosition] = useState(100); // Set the desired starting position
+  const [startPosition] = useState(400); // Set the desired starting position
   const position = useRef(startPosition);
 
   const ghostRef = useRef<HTMLImageElement | null>(null);
@@ -182,7 +182,7 @@ const GhostGame = () => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {!gameMode && <Title>Game Projects</Title>}
+      {!gameMode && <Title className="ghost-font">Click to move</Title>}
       <StyledCard
         hovered={isHovered}
         gameMode={gameMode}
@@ -192,6 +192,7 @@ const GhostGame = () => {
           width: "100%",
           height: "100%",
           borderColor: isHovered ? "rgb(102, 102, 102)" : "null",
+          overflow: "hidden",
         }}
       >
         <GameImage

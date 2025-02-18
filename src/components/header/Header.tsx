@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { fadeIn, fadeOut } from "styles/animations";
 import { useCursor } from "context/CursorContext";
 import StyledTitle from "./StyledTitle";
 import Card from "components/Card";
-import { BsEnvelopeFill, BsGithub, BsLinkedin } from "react-icons/bs";
+import { BsGithub } from "react-icons/bs";
 import { FaLinkedinIn, FaEnvelope } from "react-icons/fa";
-import { HiMail } from "react-icons/hi";
 
 const HeaderContainer = styled.div<{ isFading: boolean }>`
-  /* animation: ${({ isFading }) =>
-    isFading ? fadeOut : fadeIn} 0.5s ease-in-out; */
-  padding: 0 12rem;
+  animation: ${({ isFading }) => isFading && fadeIn} 0.5s ease-in-out;
+  padding: 16px 12rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  position: relative;
-
+  position: sticky;
+  top: 0;
+  background: rgba(14, 14, 14, 0.9);
+  backdrop-filter: blur(10px);
+  z-index: 4;
   margin: 4rem 0;
   margin-top: 0;
 
@@ -40,10 +41,6 @@ const LinkText = styled.p`
   transition: all 0.3s ease;
   color: #ccc;
   z-index: 1;
-  /* 
-  &:hover {
-    transform: translateX(10px);
-  } */
 `;
 
 const Header: React.FC = () => {
@@ -51,26 +48,17 @@ const Header: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isFading, setIsFading] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
+  // Trigger fade animation when location changes
   useEffect(() => {
-    setIsVisible(true);
-    setIsFirstLoad(false);
-  }, []);
-
-  const handleClick = () => {
-    setHovered(false);
     setIsFading(true);
-    navigate(location.pathname === "/" ? "/about" : "/contact");
-    setIsFading(false);
-    setIsVisible(false);
-    setTimeout(() => setIsVisible(true), 500);
-  };
+    const timeout = setTimeout(() => setIsFading(false), 500); // Wait for animation to finish
+    return () => clearTimeout(timeout);
+  }, [location.pathname]);
 
   return (
-    <HeaderContainer isFading={!isVisible || isFading}>
-      <StyledTitle isFirstLoad={isFirstLoad} />
+    <HeaderContainer isFading={isFading}>
+      <StyledTitle />
       <div
         style={{
           display: "flex",
@@ -94,7 +82,7 @@ const Header: React.FC = () => {
           <LinkText
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            onClick={handleClick}
+            onClick={() => navigate("/about")}
           >
             about me
           </LinkText>

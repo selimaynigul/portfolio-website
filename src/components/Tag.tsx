@@ -9,6 +9,7 @@ const StyledTag = styled.span`
   color: rgba(255, 255, 255, 0.5);
   transition: all 0.3s ease-in-out;
   text-wrap: nowrap;
+  z-index: 2;
 
   &:hover {
     background: rgba(255, 255, 255, 0.1);

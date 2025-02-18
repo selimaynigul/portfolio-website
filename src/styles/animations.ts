@@ -94,3 +94,25 @@ export const slideOut = keyframes`
     transform: translateX(-10px) rotate(-15deg);
   }
 `;
+
+export const appear = keyframes`
+  0% {
+    opacity: 0;
+    scale: 0.8;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+`;
+
+export const disappear = keyframes`
+0% {
+  opacity: 1;
+  scale: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 0.8;
+  }
+`;

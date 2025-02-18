@@ -10,7 +10,6 @@ const CardWrapper = styled.div<{ styleProps: React.CSSProperties }>`
     borderRadius: styleProps.borderRadius || "10px",
     border: styleProps.border || "1px solid #333",
     position: "relative",
-    overflow: "hidden",
     transition: "all 0.3s ease-in-out",
     color: styleProps.color || "#ccc",
     fontSize: styleProps.fontSize || "0.9rem",
@@ -21,6 +20,17 @@ const CardWrapper = styled.div<{ styleProps: React.CSSProperties }>`
     justifyContent: "center",
     ...styleProps,
   })}
+`;
+
+/* New Container to Restrict Cursor Effect */
+const CursorContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Restricts CursorEffect */
+  pointer-events: none;
 `;
 
 const CursorEffect = styled.div<{ x: number; y: number; visible: boolean }>`
@@ -67,7 +77,9 @@ const Card: React.FC<CardProps> = ({ children, style = {} }) => {
       onMouseLeave={handleMouseLeave}
       styleProps={style}
     >
-      <CursorEffect x={cursorPos.x} y={cursorPos.y} visible={cursorVisible} />
+      <CursorContainer>
+        <CursorEffect x={cursorPos.x} y={cursorPos.y} visible={cursorVisible} />
+      </CursorContainer>{" "}
       {children}
     </CardWrapper>
   );

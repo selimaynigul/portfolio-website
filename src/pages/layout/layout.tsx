@@ -6,11 +6,21 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const squareSize = 200; // Change this to control the size of the squares
+
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: "rgb(14, 14, 14)",
+        backgroundColor: "rgb(14, 14, 14)",
+        /*   backgroundImage: `
+          linear-gradient(transparent ${
+            squareSize - 1
+          }px, rgba(255, 255, 255, 0.05) ${squareSize}px), 
+          linear-gradient(90deg, transparent ${
+            squareSize - 1
+          }px, rgba(255, 255, 255, 0.05) ${squareSize}px)`,
+        backgroundSize: `${squareSize}px ${squareSize}px`, // Uses the variable for sizing */
         cursor: "none",
       }}
     >

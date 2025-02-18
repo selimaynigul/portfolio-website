@@ -153,7 +153,9 @@ const CategoryItemContent: React.FC<CategoryItemContentProps> = ({
             y={cursorPos.y}
             visible={cursorVisible}
           />
-          <CategoryItemDescription>
+          <CategoryItemDescription
+            className={title === "Game" ? "ghost-font" : ""}
+          >
             <span>{categoryData[title].text}</span>
             <Tags>
               {categoryData[title].tags.map((tag: any) => (

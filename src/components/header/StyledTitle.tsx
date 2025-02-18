@@ -16,19 +16,18 @@ const NameContainerWrapper = styled.div`
   }
 `;
 
-const Emoji = styled.img<{ isVisible: boolean; isfirstload: boolean }>`
+const Emoji = styled.img<{ isVisible: boolean }>`
   width: 32px;
   height: 32px;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   position: absolute;
   left: 100%;
   margin-left: 8px;
-  animation: ${({ isVisible, isfirstload }) =>
-      isfirstload ? "none" : isVisible ? slideIn : slideOut}
+  animation: ${({ isVisible }) => (isVisible ? slideIn : slideOut)}
     ${({ isVisible }) => (isVisible ? "0.8s" : "0.2s")} ease-in-out;
 `;
 
-const StyledTitle: React.FC<{ isFirstLoad: boolean }> = ({ isFirstLoad }) => {
+const StyledTitle: React.FC = () => {
   const [isNameHovered, setIsNameHovered] = useState(false);
   const location = useLocation();
 
@@ -46,12 +45,7 @@ const StyledTitle: React.FC<{ isFirstLoad: boolean }> = ({ isFirstLoad }) => {
           >
             selim
           </span>
-          <Emoji
-            src="./emoji.png"
-            alt="emoji"
-            isVisible={isNameHovered}
-            isfirstload={isFirstLoad}
-          />
+          <Emoji src="./emoji.png" alt="emoji" isVisible={isNameHovered} />
         </>
       )}
     </NameContainerWrapper>

@@ -1,10 +1,11 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { Row, Col } from "antd";
-import { fadeIn, fadeOut } from "styles/animations";
+import { disappear, fadeIn, fadeOut } from "styles/animations";
 import Tag from "components/Tag";
 import Card from "components/Card";
 import { FaLocationDot } from "react-icons/fa6";
+import { appear } from "styles/animations";
 
 const Container = styled.div<{ isClicked: boolean }>`
   display: flex;
@@ -16,6 +17,8 @@ const Container = styled.div<{ isClicked: boolean }>`
   cursor: none;
   transition: background 0.7s ease-in-out;
   padding: 0 12rem;
+
+  display: contents;
 
   @media (max-width: 768px) {
     padding: 0 10px;
@@ -36,6 +39,9 @@ const AboutSection = styled.div`
   flex-direction: column;
   gap: 1rem;
 
+  position: sticky;
+  top: 84px;
+
   @media (max-width: 768px) {
     box-sizing: border-box;
     width: 100%;
@@ -46,7 +52,7 @@ const WorkExperienceSection = styled.div`
   animation: ${fadeIn} 0.5s ease-in-out;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 16px;
   padding-bottom: 2rem;
 `;
 
@@ -55,6 +61,12 @@ const TagContainer = styled.div`
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 1rem;
+`;
+
+const CardWrapper = styled.div`
+  animation: ${appear} 5s linear, ${disappear} 5s linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 20%, exit 0% cover 30%;
 `;
 
 const workExperiences = [
@@ -75,6 +87,33 @@ const workExperiences = [
     description:
       "Worked on enterprise software solutions, improving code efficiency and implementing best development practices.",
     tags: ["Java", "Spring Boot", "Microservices"],
+  },
+  {
+    company: "GameStudio",
+    role: "Game Developer",
+    startDate: "Jun 2019",
+    endDate: "Feb 2021",
+    description:
+      "Developed interactive and engaging game mechanics using Unity and C#. Worked on gameplay programming and optimization.",
+    tags: ["Unity", "C#", "Game Development"],
+  },
+  {
+    company: "GameStudio",
+    role: "Game Developer",
+    startDate: "Jun 2019",
+    endDate: "Feb 2021",
+    description:
+      "Developed interactive and engaging game mechanics using Unity and C#. Worked on gameplay programming and optimization.",
+    tags: ["Unity", "C#", "Game Development"],
+  },
+  {
+    company: "GameStudio",
+    role: "Game Developer",
+    startDate: "Jun 2019",
+    endDate: "Feb 2021",
+    description:
+      "Developed interactive and engaging game mechanics using Unity and C#. Worked on gameplay programming and optimization.",
+    tags: ["Unity", "C#", "Game Development"],
   },
   {
     company: "GameStudio",
@@ -111,13 +150,18 @@ const AboutMePage: React.FC = () => {
 
   return (
     <Container isClicked={false}>
-      <Row gutter={[32, 32]}>
+      <Row style={{ padding: "0 12rem", margin: 0 }}>
         <Col
           xs={24}
           md={12}
-          style={{ display: "flex", flexDirection: "column" }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            paddingRight: "8px",
+          }}
         >
           <AboutSection>
+            {/*   Summary */}
             <div style={{ display: "flex", gap: "1rem", height: "4rem" }}>
               <Card
                 style={{
@@ -141,17 +185,18 @@ const AboutMePage: React.FC = () => {
                 <></>
               </Card>
             </div>
-
-            <div style={{ margin: "2rem 0" }}>
-              <p>
-                I’m Selim Aynigül, a passionate developer with a strong
-                background in software engineering. I specialize in web, mobile,
-                and game development, always eager to explore new technologies.
-                From building interactive front-end applications with React and
-                Next.js to developing robust mobile apps with Kotlin and Jetpack
-                Compose, I thrive on solving challenges and crafting seamless
-                user experiences.
-              </p>
+            <div style={{ margin: "/* 2rem */ 0" }}>
+              <Card>
+                <p>
+                  I’m Selim Aynigül, a passionate developer with a strong
+                  background in software engineering. I specialize in web,
+                  mobile, and game development, always eager to explore new
+                  technologies. From building interactive front-end applications
+                  with React and Next.js to developing robust mobile apps with
+                  Kotlin and Jetpack Compose, I thrive on solving challenges and
+                  crafting seamless user experiences.
+                </p>
+              </Card>
             </div>
             <TagContainer>
               {skills.map((skill) => (
@@ -163,32 +208,48 @@ const AboutMePage: React.FC = () => {
         <Col
           xs={24}
           md={12}
-          style={{ display: "flex", flexDirection: "column" }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            paddingLeft: "8px",
+          }}
         >
           <WorkExperienceSection>
+            {/*   <div
+              style={{
+                background: "#0E0E0E",
+                position: "sticky",
+                top: 84,
+                zIndex: 5,
+              }}
+            >
+              Experience
+            </div> */}
             {workExperiences.map((work, index) => (
-              <Card key={index}>
-                <div>
-                  <strong>{work.company}</strong> -{" "}
-                  <span style={{ color: "rgba(255, 255, 255, 0.5)" }}>
-                    {work.role}
-                  </span>
-                  <span
-                    style={{
-                      float: "right",
-                      color: "rgba(255, 255, 255, 0.5)",
-                    }}
-                  >
-                    {work.startDate} - {work.endDate}
-                  </span>
-                </div>
-                <p>{work.description}</p>
-                <TagContainer>
-                  {work.tags.map((tag) => (
-                    <Tag key={tag}>{tag}</Tag>
-                  ))}
-                </TagContainer>
-              </Card>
+              <CardWrapper>
+                <Card key={index}>
+                  <div>
+                    <strong>{work.role}</strong> •{" "}
+                    <span style={{ color: "rgba(255, 255, 255, 0.5)" }}>
+                      {work.company}
+                    </span>
+                    <span
+                      style={{
+                        float: "right",
+                        color: "rgba(255, 255, 255, 0.5)",
+                      }}
+                    >
+                      {work.startDate} - {work.endDate}
+                    </span>
+                  </div>
+                  <p>{work.description}</p>
+                  <TagContainer>
+                    {work.tags.map((tag) => (
+                      <Tag key={tag}>{tag}</Tag>
+                    ))}
+                  </TagContainer>
+                </Card>
+              </CardWrapper>
             ))}
           </WorkExperienceSection>
         </Col>

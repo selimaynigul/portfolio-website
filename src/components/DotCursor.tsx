@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useCursor } from "../context/CursorContext";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 
 const CircleCursor = styled.div<{ isHovered: boolean; isVisible: boolean }>`
   position: fixed;
-  width: ${({ isHovered }) => (isHovered ? "40px" : "0px")};
-  height: ${({ isHovered }) => (isHovered ? "40px" : "0px")};
-  border: 2px solid white;
-  background-color: rgba(255, 255, 255, 0.1);
+  width: ${({ isHovered }) => (isHovered ? "50px" : "0px")};
+  height: ${({ isHovered }) => (isHovered ? "50px" : "0px")};
+  border: 1px solid lightgray;
+  background-color: rgba(255, 255, 255, 0.07);
   border-radius: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
@@ -18,7 +19,7 @@ const CircleCursor = styled.div<{ isHovered: boolean; isVisible: boolean }>`
 `;
 
 const DotCursor: React.FC = () => {
-  const { x, y, isVisible, isHovered } = useCursor();
+  const { x, y, isVisible, isHovered, setHovered } = useCursor();
   const [circleX, setCircleX] = useState(x);
   const [circleY, setCircleY] = useState(y);
 
