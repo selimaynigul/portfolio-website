@@ -68,10 +68,9 @@ const InstructionGif = styled.img<{ visible: boolean }>`
 const StyledCard = styled(Card).attrs((props) => ({
   ...props,
 }))<{ hovered: boolean; gameMode: boolean }>`
-  transition: height 0.3s ease-in-out, border-color 0.3s ease-in-out;
-  height: ${({ hovered }) => (hovered ? "7rem" : "6rem")};
+  transition: height 0.2s ease-in-out, border-color 0.2s ease-in-out;
   border-color: ${({ hovered, gameMode }) =>
-    hovered || gameMode ? "gray" : "transparent"};
+    hovered || gameMode ? "   rgb(78, 78, 78)" : null};
 `;
 const GhostGame = () => {
   const [gameMode, setGameMode] = useState(false);
@@ -79,7 +78,7 @@ const GhostGame = () => {
   const [ghostSrc, setGhostSrc] = useState("ghost_gif/ghost_idle.gif");
   const [instructionGifKey, setInstructionGifKey] = useState(0);
   const [firstStart, setFirstStart] = useState(true); // Track first game start
-  const { isHovered, setHovered } = useCursor();
+  const { setHovered } = useCursor();
   const [startPosition] = useState(400); // Set the desired starting position
   const position = useRef(startPosition);
 
@@ -87,6 +86,7 @@ const GhostGame = () => {
   const animationRef = useRef<number | null>(null);
   const movement = useRef({ left: false, right: false });
   const containerWidth = useRef(0);
+  const [gameHovered, setGameHovered] = useState(false);
 
   useEffect(() => {
     if (ghostRef.current) {
@@ -179,19 +179,25 @@ const GhostGame = () => {
 
   return (
     <GameContainer
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => {
+        setHovered(true);
+        setGameHovered(true);
+      }}
+      onMouseLeave={() => {
+        setHovered(false);
+        setGameHovered(false);
+      }}
     >
       {!gameMode && <Title className="ghost-font">Click to move</Title>}
       <StyledCard
-        hovered={isHovered}
+        hovered={gameHovered}
         gameMode={gameMode}
         style={{
           background: "url(/ghost_bg.png) bottom/cover no-repeat",
           position: "relative",
           width: "100%",
           height: "100%",
-          borderColor: isHovered ? "rgb(102, 102, 102)" : "null",
+          borderColor: gameHovered ? "rgb(102, 102, 102)" : "null",
           overflow: "hidden",
         }}
       >
@@ -202,7 +208,7 @@ const GhostGame = () => {
           src={ghostSrc}
           alt="Ghost"
         />
-        <Overlay visible={isHovered} onClick={toggleGameMode}>
+        <Overlay visible={gameHovered} onClick={toggleGameMode}>
           {gameMode ? <PauseButton /> : <PlayButton />}
         </Overlay>
       </StyledCard>

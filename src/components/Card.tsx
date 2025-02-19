@@ -18,6 +18,7 @@ const CardWrapper = styled.div<{ styleProps: React.CSSProperties }>`
     flexDirection: "column",
     gap: styleProps.gap || "20px",
     justifyContent: "center",
+    overflow: "hidden",
     ...styleProps,
   })}
 `;

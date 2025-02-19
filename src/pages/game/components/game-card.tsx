@@ -1,13 +1,32 @@
 import React from "react";
 import styled from "styled-components";
 import Card from "components/Card";
-import Tag from "components/Tag"; // Assuming Tag component exists
-import { FiArrowRight } from "react-icons/fi"; // Importing the right arrow icon
+import Tag from "components/Tag";
+import { FiArrowRight } from "react-icons/fi";
+import { useCursor } from "context/CursorContext";
 
-const StyledCard = styled(Card)`
+const StyledCard = styled(Card)<{ image: string }>`
   overflow: hidden;
   padding-bottom: 0px;
   position: relative;
+  transition: all 0.3s ease-in-out;
+
+  /* Apply blur only to the background on hover */
+  &:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(${(props) => props.image}) center/cover no-repeat;
+    background-size: cover;
+    filter: blur(0px); /* Initially no blur */
+    transition: all 0.3s ease-in-out;
+    z-index: 0;
+    filter: blur(40px);
+    opacity: 0.2;
+  }
 `;
 
 const GameHeader = styled.div`
@@ -25,14 +44,14 @@ const GameTitle = styled.h3`
 
 const Arrow = styled(FiArrowRight)`
   font-size: 1.5rem;
-  opacity: 0.7;
+  opacity: 0;
   cursor: pointer;
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   position: absolute;
   top: 10px;
   right: 0px;
 
-  &:hover {
+  ${StyledCard}:hover & {
     opacity: 1;
   }
 `;
@@ -53,6 +72,11 @@ const ImageContainer = styled.div`
   box-shadow: rgb(14, 14, 14) 0px 50px 100px -20px,
     rgb(0, 0, 0) 0px 30px 60px -30px;
   border: 1px solid #333;
+  transition: transform 0.2s ease-in-out;
+
+  ${StyledCard}:hover & {
+    transform: translateY(-10px);
+  }
 `;
 
 const GameImage = styled.img`
@@ -78,8 +102,14 @@ const GameCard: React.FC<GameCardProps> = ({
   image,
   tags,
 }) => {
+  const { setHovered } = useCursor();
   return (
-    <StyledCard style={{ padding: "15px 30px 0 30px" }}>
+    <StyledCard
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{ padding: "15px 30px 0 30px" }}
+      image={image}
+    >
       <GameHeader>
         <div>
           <GameTitle>{title}</GameTitle>

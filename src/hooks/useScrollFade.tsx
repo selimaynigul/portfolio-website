@@ -11,33 +11,36 @@ interface UseScrollFadeProps {
   leaveEnd?: string;
   duration?: number;
   scrub?: boolean;
+  staggerY?: number; // ✅ Add a stagger effect for stacking
 }
 
 const useScrollFade = (
   {
-    enterStart = "top 110%",
-    enterEnd = "top 70%",
-    leaveStart = "top 15%",
-    leaveEnd = "top -25%",
+    enterStart = "top 100%",
+    enterEnd = "top 60%",
+    leaveStart = "top 0%",
+    leaveEnd = "top -40%",
     duration = 1,
     scrub = true,
+    staggerY = 20,
   }: UseScrollFadeProps,
   refs: React.MutableRefObject<(HTMLDivElement | null)[]>
 ) => {
   useEffect(() => {
     if (!refs.current.length) return;
 
-    refs.current.forEach((ref) => {
+    refs.current.forEach((ref, index) => {
       if (!ref) return;
 
       gsap.fromTo(
         ref,
-        { opacity: 0, scale: 0.8 },
+        { opacity: 0, scale: 0.9, y: Math.floor((index / 2) % 3) * staggerY },
         {
           opacity: 1,
           scale: 1,
+          y: 0,
           duration,
-          immediateRender: true,
+          immediateRender: false,
           scrollTrigger: {
             trigger: ref,
             start: enterStart,
@@ -50,12 +53,13 @@ const useScrollFade = (
 
       gsap.fromTo(
         ref,
-        { opacity: 1, scale: 1 },
+        { opacity: 1, scale: 1, y: 0 },
         {
           opacity: 0,
-          scale: 0.8,
+          scale: 0.9,
+          y: Math.floor((index / 2) % 3) * staggerY,
           duration,
-          immediateRender: true,
+          immediateRender: false,
           scrollTrigger: {
             trigger: ref,
             start: leaveStart,
@@ -66,7 +70,7 @@ const useScrollFade = (
         }
       );
     });
-  }, [enterStart, enterEnd, duration, scrub, refs]);
+  }, [enterStart, enterEnd, duration, scrub, staggerY, refs]);
 };
 
 export default useScrollFade;

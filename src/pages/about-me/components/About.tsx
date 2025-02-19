@@ -1,8 +1,26 @@
 import Card from "components/Card";
 import Tag from "components/Tag";
 import { FaLocationDot } from "react-icons/fa6";
+import styled from "styled-components";
+import { fadeIn } from "styles/animations";
 
-const About = () => {
+const AboutSection = styled.div`
+  text-align: left;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: 84px;
+  animation: ${fadeIn} 0.5s ease-in-out;
+
+  @media (max-width: 768px) {
+    box-sizing: border-box;
+    width: 100%;
+  }
+`;
+
+const Summary = () => {
   const skills = [
     "React",
     "Java",
@@ -24,7 +42,7 @@ const About = () => {
     "Aseprite",
   ];
   return (
-    <>
+    <AboutSection>
       <div style={{ display: "flex", gap: "1rem", height: "4rem" }}>
         <Card
           style={{
@@ -63,8 +81,8 @@ const About = () => {
           <Tag key={skill}>{skill}</Tag>
         ))}
       </div>
-    </>
+    </AboutSection>
   );
 };
 
-export default About;
+export default Summary;
