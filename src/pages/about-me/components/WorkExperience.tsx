@@ -1,11 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { fadeIn } from "styles/animations";
 import WorkCard from "./WorkCard";
-
-gsap.registerPlugin(ScrollTrigger);
+import useScrollFade from "hooks/useScrollFade";
 
 const WorkExperienceSection = styled.div`
   display: flex;
@@ -31,58 +28,15 @@ interface WorkExperienceProps {
 }
 
 const WorkExperience: React.FC<WorkExperienceProps> = ({ experiences }) => {
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    if (!cardRefs.current.length) return;
-
-    cardRefs.current.forEach((card, index) => {
-      if (!card) return;
-
-      gsap.fromTo(
-        card,
-        { opacity: 0, scale: 0.8 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 1,
-          immediateRender: false,
-          scrollTrigger: {
-            trigger: card,
-            start: "top 100%",
-            end: "top 70%",
-            scrub: true,
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-
-      gsap.fromTo(
-        card,
-        { opacity: 1, scale: 1 },
-        {
-          opacity: 0,
-          scale: 0.8,
-          duration: 1,
-          immediateRender: false,
-          scrollTrigger: {
-            trigger: card,
-            start: "top 15%",
-            end: "top -15%",
-            scrub: true,
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-    });
-  }, []);
+  const fadeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  useScrollFade({}, fadeRefs);
 
   return (
     <WorkExperienceSection>
       {experiences.map((work, index) => (
         <CardWrapper
           ref={(el) => {
-            if (el) cardRefs.current[index] = el;
+            if (el) fadeRefs.current[index] = el;
           }}
           key={index}
         >
