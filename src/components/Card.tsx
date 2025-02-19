@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef } from "react";
 import styled from "styled-components";
 
 const CardWrapper = styled.div<{ styleProps: React.CSSProperties }>`
@@ -13,7 +13,7 @@ const CardWrapper = styled.div<{ styleProps: React.CSSProperties }>`
     transition: "all 0.3s ease-in-out",
     color: styleProps.color || "#ccc",
     fontSize: styleProps.fontSize || "0.9rem",
-    width: styleProps.width || "null",
+    width: styleProps.width || "auto",
     display: "flex",
     flexDirection: "column",
     gap: styleProps.gap || "20px",
@@ -46,43 +46,51 @@ const CursorEffect = styled.div<{ x: number; y: number; visible: boolean }>`
   opacity: ${({ visible }) => (visible ? 1 : 0)};
 `;
 
-interface CardProps {
-  children: React.ReactNode;
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   style?: React.CSSProperties;
+  children: React.ReactNode;
 }
 
-const Card: React.FC<CardProps> = ({ children, style = {} }) => {
-  const [cursorPos, setCursorPos] = useState({ x: 50, y: 50 });
-  const [cursorVisible, setCursorVisible] = useState(false);
+const CardComponent = forwardRef<HTMLDivElement, CardProps>(
+  ({ children, style = {}, ...props }, ref) => {
+    const [cursorPos, setCursorPos] = useState({ x: 50, y: 50 });
+    const [cursorVisible, setCursorVisible] = useState(false);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const offsetX = e.clientX - rect.left;
-    const offsetY = e.clientY - rect.top;
-    setCursorPos({ x: offsetX - 60, y: offsetY - 60 });
-  };
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left;
+      const offsetY = e.clientY - rect.top;
+      setCursorPos({ x: offsetX - 60, y: offsetY - 60 });
+    };
 
-  const handleMouseEnter = () => {
-    setCursorVisible(true);
-  };
+    const handleMouseEnter = () => {
+      setCursorVisible(true);
+    };
 
-  const handleMouseLeave = () => {
-    setCursorVisible(false);
-  };
+    const handleMouseLeave = () => {
+      setCursorVisible(false);
+    };
 
-  return (
-    <CardWrapper
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      styleProps={style}
-    >
-      <CursorContainer>
-        <CursorEffect x={cursorPos.x} y={cursorPos.y} visible={cursorVisible} />
-      </CursorContainer>{" "}
-      {children}
-    </CardWrapper>
-  );
-};
+    return (
+      <CardWrapper
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        styleProps={style}
+        {...props} // ✅ Forward all other props
+      >
+        <CursorContainer>
+          <CursorEffect
+            x={cursorPos.x}
+            y={cursorPos.y}
+            visible={cursorVisible}
+          />
+        </CursorContainer>
+        {children}
+      </CardWrapper>
+    );
+  }
+);
 
-export default Card;
+export default CardComponent; // ✅ Use a named function when using forwardRef
