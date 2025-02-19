@@ -1,15 +1,24 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Row, Col } from "antd";
 import GhostGame from "./components/ghost-game";
 import GameCard from "./components/game-card";
-import styled from "styled-components";
-import { appear, disappear, fadeIn } from "styles/animations";
+import styled, { css } from "styled-components";
+import { fadeIn } from "styles/animations";
 import useScrollFade from "hooks/useScrollFade";
 import { gameProjects } from "data/gameProjectsData";
+import { useNavigate } from "react-router-dom";
+import { fadeOut } from "styles/animations";
+
+const Container = styled.div<{ isClicked: boolean }>`
+  ${({ isClicked }) =>
+    isClicked &&
+    css`
+      animation: ${fadeOut} 0.3s ease forwards;
+    `}
+`;
 
 const StyledRow = styled(Row)`
   animation: ${fadeIn} 0.5s ease-in-out;
-  padding-bottom: 2rem;
   box-sizing: border-box;
   margin: 2rem 12rem 0 12rem !important;
 
@@ -23,7 +32,9 @@ const CardWrapper = styled.div`
 `;
 
 const GameProjectsPage: React.FC = () => {
+  const [isClicked, setIsClicked] = useState(false);
   const fadeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const navigate = useNavigate();
   useScrollFade(
     {
       leaveStart: "top 10%",
@@ -36,40 +47,48 @@ const GameProjectsPage: React.FC = () => {
   );
 
   return (
-    <>
+    <Container isClicked={isClicked}>
       <GhostGame />
-      <StyledRow style={{ padding: "0", margin: 0 }}>
-        {gameProjects.map((game, index) => (
-          <Col
-            xs={24}
-            sm={12}
-            key={index}
-            style={{
-              paddingRight: index % 2 === 0 ? "8px" : "0",
-              paddingLeft: index % 2 === 0 ? "0px" : "8px",
-              marginBottom: 64,
-            }}
-          >
-            <CardWrapper
-              ref={(el) => {
-                if (el) fadeRefs.current[index] = el;
-              }}
+      <StyledRow style={{ paddingBottom: "4rem" }}>
+        {gameProjects.map((game, index) => {
+          const gameSlug = game.title.toLowerCase().replace(/\s+/g, "-");
+
+          return (
+            <Col
+              xs={24}
+              sm={12}
               key={index}
-              className="ghost-font"
+              style={{
+                paddingRight: index % 2 === 0 ? "8px" : "0",
+                paddingLeft: index % 2 === 0 ? "0px" : "8px",
+                marginBottom: 64,
+              }}
             >
-              <GameCard
-                tags={game.tags}
-                title={game.title}
-                company={game.company}
-                year={game.year}
-                description={game.description}
-                image={game.image}
-              />
-            </CardWrapper>
-          </Col>
-        ))}
+              <CardWrapper
+                ref={(el) => {
+                  if (el) fadeRefs.current[index] = el;
+                }}
+                key={index}
+                className="ghost-font"
+                onClick={() => {
+                  setIsClicked(true);
+                  navigate(`/game/${gameSlug}`);
+                }}
+              >
+                <GameCard
+                  tags={game.tags}
+                  title={game.title}
+                  company={game.company}
+                  year={game.year}
+                  description={game.description}
+                  image={game.image}
+                />
+              </CardWrapper>
+            </Col>
+          );
+        })}
       </StyledRow>
-    </>
+    </Container>
   );
 };
 
