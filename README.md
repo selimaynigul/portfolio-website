@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-Note: The website is currently under development and does not contain real data. You can visit the template version of the site at this [link](https://github.com/facebook/create-react-app]).
+Note: The website is currently under development and does not contain real data. You can visit the template version of the site at this [link](https://portfolio-git-game-selim-ayniguls-projects.vercel.app/).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
