@@ -5,4 +5,6 @@ This is my personal portfolio website, where I showcase my projects, skills, and
 > 🚧 **This project is currently under development.**  
 > The preview below uses **mock data** and does not reflect the final content.
 
+# Example Video
+
 ![Portfolio Preview](./assets/portfolio.gif)
