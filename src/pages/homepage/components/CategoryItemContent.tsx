@@ -4,6 +4,7 @@ import { MdArrowOutward } from "react-icons/md";
 import { categoryData } from "data/categoryData";
 import Tag from "components/Tag";
 import { fadeInBlur, fadeOutBlur } from "styles/animations";
+import Card from "components/Card";
 
 const CategoryItemContentWrapper = styled.div<{ active: boolean }>`
   position: absolute;
@@ -87,7 +88,7 @@ const Tags = styled.div`
   z-index: 2;
 `;
 
-const Arrow = styled.div<{ active: boolean }>`
+const Arrow = styled(Card)<{ active: boolean }>`
   opacity: 0;
   transition: all 0.5s ease;
   padding: 0;

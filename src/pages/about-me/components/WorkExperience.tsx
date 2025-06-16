@@ -1,19 +1,22 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
-import { fadeIn } from "styles/animations";
 import WorkCard from "./WorkCard";
+import { motion } from "framer-motion";
 import useScrollFade from "hooks/useScrollFade";
 
-const WorkExperienceSection = styled.div`
+const WorkExperienceSection = styled(motion.div)`
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding-bottom: 2rem;
-  animation: ${fadeIn} 0.5s ease-in-out;
 `;
 
-const CardWrapper = styled.div`
-  opacity: 0;
+const MotionCardWrapper = styled(motion.div)`
+  width: 100%;
+`;
+
+const GSAPWrapper = styled.div`
+  width: 100%;
 `;
 
 interface WorkExperienceProps {
@@ -27,21 +30,45 @@ interface WorkExperienceProps {
   }[];
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, x: 50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
+
 const WorkExperience: React.FC<WorkExperienceProps> = ({ experiences }) => {
   const fadeRefs = useRef<(HTMLDivElement | null)[]>([]);
   useScrollFade({}, fadeRefs);
 
   return (
-    <WorkExperienceSection>
+    <WorkExperienceSection
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {experiences.map((work, index) => (
-        <CardWrapper
-          ref={(el) => {
-            if (el) fadeRefs.current[index] = el;
-          }}
-          key={index}
-        >
-          <WorkCard work={work} />
-        </CardWrapper>
+        <MotionCardWrapper key={index} variants={cardVariants}>
+          <GSAPWrapper
+            ref={(el) => {
+              if (el) fadeRefs.current[index] = el;
+            }}
+          >
+            <WorkCard work={work} />
+          </GSAPWrapper>
+        </MotionCardWrapper>
       ))}
     </WorkExperienceSection>
   );

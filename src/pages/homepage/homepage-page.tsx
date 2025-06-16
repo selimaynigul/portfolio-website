@@ -5,6 +5,7 @@ import { useCursor } from "context/CursorContext";
 import { fadeIn, fadeOut } from "styles/animations";
 import { categoryData } from "data/categoryData";
 import CategoryItemContent from "./components/CategoryItemContent";
+import { motion } from "framer-motion";
 
 const Container = styled.div<{ isClicked: boolean }>`
   display: flex;
@@ -76,6 +77,23 @@ const Text = styled.p`
   }
 `;
 
+const MotionCategoryItem = motion(CategoryItem); // Create motion-enabled CategoryItem
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2, // Adjust delay between animations here
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -30 },
+  visible: { opacity: 1, x: 0 },
+};
+
 const HomePage = () => {
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
   const [isClicked, setIsClicked] = useState(false);
@@ -108,23 +126,32 @@ const HomePage = () => {
     setHovered(false);
     navigate(`/${key.toLowerCase()}`);
   };
-
   return (
     <Container isClicked={isClicked}>
       <CategoryContainer>
         <Text>i'm a</Text>
-        {Object.keys(categoryData).map((title) => (
-          <CategoryItem
-            key={title}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={(e) => handleMouseEnter(title, e)}
-            onMouseLeave={() => handleMouseLeave()}
-            onClick={() => handleClick(title)}
-          >
-            <CategoryTitle>{title}</CategoryTitle>
-            <CategoryItemContent title={title} active={hoveredTab === title} />
-          </CategoryItem>
-        ))}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {Object.keys(categoryData).map((title) => (
+            <MotionCategoryItem
+              key={title}
+              variants={itemVariants}
+              onMouseMove={handleMouseMove}
+              onMouseEnter={(e) => handleMouseEnter(title, e)}
+              onMouseLeave={handleMouseLeave}
+              onClick={() => handleClick(title)}
+            >
+              <CategoryTitle>{title}</CategoryTitle>
+              <CategoryItemContent
+                title={title}
+                active={hoveredTab === title}
+              />
+            </MotionCategoryItem>
+          ))}
+        </motion.div>
         <Text>developer</Text>
       </CategoryContainer>
     </Container>

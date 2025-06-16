@@ -1,5 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import {
   HomePage,
   AboutMePage,
@@ -11,30 +17,89 @@ import {
   MobileProjectDetailPage,
   Layout,
 } from "pages";
+import AnimatedPage from "components/AnimatedPage";
 
-const App: React.FC = () => {
+const AnimatedRoutes: React.FC = () => {
+  const location = useLocation();
+
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutMePage />} />
-          <Route path="/web" element={<WebProjectsPage />} />
-          <Route path="/game" element={<GameProjectsPage />} />
-          <Route path="/mobile" element={<MobileProjectsPage />} />
-          <Route path="/web/:projectName" element={<WebProjectDetailPage />} />
-          <Route
-            path="/game/:projectName"
-            element={<GameProjectDetailPage />}
-          />
-          <Route
-            path="/mobile/:projectName"
-            element={<MobileProjectDetailPage />}
-          />
-        </Routes>
-      </Layout>
-    </Router>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route
+          path="/"
+          element={
+            <AnimatedPage>
+              <HomePage />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <AnimatedPage>
+              <AboutMePage />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/web"
+          element={
+            <AnimatedPage>
+              <WebProjectsPage />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/game"
+          element={
+            <AnimatedPage>
+              <GameProjectsPage />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/mobile"
+          element={
+            <AnimatedPage>
+              <MobileProjectsPage />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/web/:projectName"
+          element={
+            <AnimatedPage>
+              <WebProjectDetailPage />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/game/:projectName"
+          element={
+            <AnimatedPage>
+              <GameProjectDetailPage />
+            </AnimatedPage>
+          }
+        />
+        <Route
+          path="/mobile/:projectName"
+          element={
+            <AnimatedPage>
+              <MobileProjectDetailPage />
+            </AnimatedPage>
+          }
+        />
+      </Routes>
+    </AnimatePresence>
   );
 };
+
+const App: React.FC = () => (
+  <Router>
+    <Layout>
+      <AnimatedRoutes />
+    </Layout>
+  </Router>
+);
 
 export default App;

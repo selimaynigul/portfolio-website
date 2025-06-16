@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^5.24.0",
     "cra-template-typescript": "1.2.0",
+    "framer-motion": "^12.6.3",
     "gsap": "^3.12.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

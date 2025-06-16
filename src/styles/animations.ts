@@ -3,23 +3,23 @@ import { keyframes } from "styled-components";
 // Fade Animations
 export const fadeIn = keyframes`
   from {
-    opacity: 0;
-    transform: translateY(20px);
+   /*  opacity: 0;
+    transform: translateY(20px); */
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+   /*  opacity: 1;
+    transform: translateY(0); */
   }
 `;
 
 export const fadeOut = keyframes`
   from {
-    opacity: 1;
-    transform: translateY(0);
+  /*   opacity: 1;
+    transform: translateY(0); */
   }
   to {
-    opacity: 0;
-    transform: translateY(-20px);
+   /*  opacity: 0;
+    transform: translateY(-20px); */
   }
 `;
 

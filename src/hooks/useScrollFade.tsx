@@ -11,7 +11,7 @@ interface UseScrollFadeProps {
   leaveEnd?: string;
   duration?: number;
   scrub?: boolean;
-  staggerY?: number; // ✅ Add a stagger effect for stacking
+  staggerY?: number;
 }
 
 const useScrollFade = (
